@@ -1,0 +1,17 @@
+version: '3'
+services:
+  ftp-server:
+    image: garethflowers/ftp-server
+    environment:
+      - FTP_USER=user
+      - FTP_PASS=123
+    ports:
+      - '20-21:20-21/tcp'
+      - '40000-40009:40000-40009/tcp'
+    volumes:
+      - './data/ftp-server:/home/user'
+  jms-server:
+    image: symptoma/activemq:5.16.4
+    ports:
+      - '61616:61616'
+      - '8161:8161'

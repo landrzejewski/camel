@@ -6,7 +6,10 @@ public class Routes extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("file:data/input?noop=true&delay=1000")
+                                                  //env:OS_VARIABLE
+        from("file:data/input?noop=true&delay={{file.interval}}")
+                .filter(new FileTypePredicate())
+                .process(new LoggingProcessor())
                 .to("file:data/output");
     }
 

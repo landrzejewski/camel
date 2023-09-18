@@ -1,33 +1,29 @@
 package pl.training.camel;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.main.Main;
 
-import java.io.IOException;
-import java.util.Stack;
+// https://github.com/landrzejewski/camel
 
 public class Camel {
 
     public static void main(String[] args) {
-        var main = new Main();
-        try (var context = main.configure()) {
-            context.addRoutesBuilder(new Routes());
-            main.run();
+        try (var context = new DefaultCamelContext()) {
+            var propertiesComponent = context.getPropertiesComponent();
+            propertiesComponent.setLocation("classpath:training.properties");
+            context.addRoutes(new Routes());
+            context.start();
+            Thread.sleep(10_000);
         }  catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
 
         /*try (CamelContext context = new DefaultCamelContext()) {
-             context.start();
-
-
+            context.start();
             Thread.sleep(10_000);
         }  catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }*/
-
-
 
        /* try {
             context.close();
