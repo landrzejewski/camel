@@ -20,7 +20,7 @@ public class Routes extends RouteBuilder {
                 .to("activemq:orders");
                 //.toD("jms:queue:${header.finalDestination}"); // dynamic destination
 
-        from("activemq:orders")
+        from("customJms:orders")
                 .log("Message received: ${header.CamelFileName}")
                 .to("log:pl.training.camel");
     }
