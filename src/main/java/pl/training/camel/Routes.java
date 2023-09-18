@@ -1,7 +1,9 @@
 package pl.training.camel;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Routes extends RouteBuilder {
 
     @Override
@@ -18,7 +20,7 @@ public class Routes extends RouteBuilder {
                 .to("activemq:orders");
                 //.toD("jms:queue:${header.finalDestination}"); // dynamic destination
 
-        from("customJms:orders")
+        from("activemq:orders")
                 .log("Message received: ${header.CamelFileName}")
                 .to("log:pl.training.camel");
     }
