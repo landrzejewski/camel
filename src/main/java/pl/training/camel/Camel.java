@@ -11,6 +11,7 @@ public class Camel {
         try (var context = new DefaultCamelContext()) {
             var propertiesComponent = context.getPropertiesComponent();
             propertiesComponent.setLocation("classpath:training.properties");
+            context.getRegistry().bind("ymlFilter", new YmlFileFilter<>());
             context.addRoutes(new Routes());
             context.start();
             Thread.sleep(10_000);
