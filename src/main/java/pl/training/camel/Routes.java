@@ -64,7 +64,7 @@ public class Routes extends RouteBuilder {
                 //.to("file://data/output?fileName=orders-${header.Date}.xml");
         // content based router
 
-        from("file:data/input?noop=true&delay={{file.interval}}")
+        /*from("file:data/input?noop=true&delay={{file.interval}}")
                 .choice()
                     .when(header("CamelFileName").endsWith("xml"))
                         .to("direct:orders-xml")
@@ -90,7 +90,7 @@ public class Routes extends RouteBuilder {
         from("direct:orders-other")
                 .multicast()
                 .parallelProcessing()
-                .to("log:first-other", "log:second-other");
+                .to("log:first-other", "log:second-other");*/
         /*
 
         // recipient list
