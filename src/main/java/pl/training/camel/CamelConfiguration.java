@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.camel.component.activemq.ActiveMQComponent;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import pl.training.camel.as400.As400Component;
 
 //@EnableJpaRepositories
 @Configuration
@@ -19,6 +20,7 @@ public class CamelConfiguration {
                 var jmsComponent = new ActiveMQComponent();
                 jmsComponent.setBrokerURL("tcp://46.41.138.121:61616");
                 context.addComponent("customJms", jmsComponent);
+                //context.addComponent("as400", new As400Component());
             }
 
             @Override
