@@ -7,6 +7,8 @@ import org.apache.camel.support.DefaultAsyncProducer;
 
 import java.util.concurrent.ExecutorService;
 
+import static org.apache.camel.Exchange.FILE_NAME;
+
 public class As400Producer extends DefaultAsyncProducer {
 
     private ExecutorService executorService;
@@ -49,6 +51,8 @@ class Task implements Runnable {
     public void run() {
         System.out.println("Calling As400");
         try {
+            System.out.println("Processing: " + exchange.getIn()
+                    .getHeader(FILE_NAME));
             Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();

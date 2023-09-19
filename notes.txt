@@ -1,0 +1,6 @@
+- Wczytaj plik data.csv
+- Podziel go na linie
+- Napisz procesor zwracający wartości 0 i 3 kolumny
+- Odfiltruj wiersze zawierające "All industries"
+- Zamień dane na obiekt (napisz własną klasę)
+- Zamień obiekt na json i wyślij na kolejkę JMS 46.41.138.121

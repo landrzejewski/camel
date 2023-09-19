@@ -164,7 +164,8 @@ public class Routes extends RouteBuilder {
                 .end()
                 .to("log:pl.training.camel");*/
 
-
+        from("file:data/input?noop=true&delay={{file.interval}}")
+                .to("as400:main");
 
 
     }
