@@ -5,7 +5,9 @@ import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.camel.component.activemq.ActiveMQComponent;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+@EnableJpaRepositories
 @Configuration
 public class CamelConfiguration {
 

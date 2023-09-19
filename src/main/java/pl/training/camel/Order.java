@@ -1,17 +1,32 @@
 package pl.training.camel;
 
+import jakarta.persistence.*;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
 @CsvRecord(separator = ";", crlf = "UNIX")
+@Table(name = "orders")
+@Entity
 public class Order {
 
+    @GeneratedValue
+    @Id
+    private Long id;
     @DataField(pos = 1)
     private String name;
     @DataField(pos = 2, precision = 2)
-    private double price;
+    private String price;
     @DataField(pos = 3)
     private boolean promoProduct;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -21,11 +36,11 @@ public class Order {
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -40,10 +55,10 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
                 ", promoProduct=" + promoProduct +
                 '}';
     }
-
 }

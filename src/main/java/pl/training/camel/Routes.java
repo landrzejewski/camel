@@ -62,7 +62,6 @@ public class Routes extends RouteBuilder {
                 .marshal(jsonXmlDataFormat);
                 //.log("\n${body}");
                 //.to("file://data/output?fileName=orders-${header.Date}.xml");
-        /*
         // content based router
 
         from("file:data/input?noop=true&delay={{file.interval}}")
@@ -77,8 +76,14 @@ public class Routes extends RouteBuilder {
 
         from("direct:orders-xml")
                 .to("log:xml");
-        *//*from("direct:orders-csv")
-                .to("log:csv");*//*
+        from("direct:orders-csv")
+                .unmarshal().bindy(Csv, Order.class)
+                .split(body())
+                //.bean(OrderToSql.class)
+                //.to("log:csv")
+                //.to("jdbc:dataSource?useHeadersAsParameters=true");
+                .bean(OrdersRepository.class, "save")
+                .to("log:csv");
 
         // multicasting
 
@@ -86,7 +91,7 @@ public class Routes extends RouteBuilder {
                 .multicast()
                 .parallelProcessing()
                 .to("log:first-other", "log:second-other");
-
+        /*
 
         // recipient list
 
@@ -117,7 +122,6 @@ public class Routes extends RouteBuilder {
                 .loadBalance().roundRobin()
                 .to("direct:queueA", "direct:queueB", "direct:queueC")
                 .end();
-        */
 
         // split // aggregate
 
@@ -130,6 +134,39 @@ public class Routes extends RouteBuilder {
                 .completionSize(2)
                 //.aggregationRepository()
                 .to("log:split-aggregate");
+
+        */
+
+        /*errorHandler(defaultErrorHandler()
+                .retryAttemptedLogInterval(1000)
+                .maximumRedeliveries(3)
+                .useExponentialBackOff()
+                .backOffMultiplier(2)
+        );*/
+
+       /* errorHandler(deadLetterChannel("log:dead?level=Error")
+                .useOriginalBody()
+                //.onPrepareFailure()
+        );*/
+
+        /*from("file:module-four/source?noop=true")
+                //.onException(RuntimeException.class, ValidationException.class).maximumRedeliveries(3)
+                .onException(IllegalArgumentException.class)
+                .continued(true)
+
+                .convertBodyTo(String.class)
+                .doTry()
+                    .bean("upperCase")
+                    .bean("lowerCase")
+                .doCatch(IllegalAccessException.class)
+                    .process(new FailureProcessor())
+                    .to("log:pl.training.camel")
+                .end()
+                .to("log:pl.training.camel");*/
+
+
+
+
     }
 
 }
