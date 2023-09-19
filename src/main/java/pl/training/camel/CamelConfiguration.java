@@ -15,7 +15,7 @@ public class CamelConfiguration {
             @Override
             public void beforeApplicationStart(CamelContext context) {
                 var jmsComponent = new ActiveMQComponent();
-                jmsComponent.setBrokerURL("tcp://localhost:61616");
+                jmsComponent.setBrokerURL("tcp://46.41.138.121:61616");
                 context.addComponent("customJms", jmsComponent);
             }
 
@@ -24,6 +24,11 @@ public class CamelConfiguration {
 
             }
         };
+    }
+
+    @Bean
+    public CsvConverter csvConverter() {
+        return new CsvConverter();
     }
 
 }
