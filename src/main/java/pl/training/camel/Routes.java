@@ -1,6 +1,7 @@
 package pl.training.camel;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.BindyType;
 import org.apache.camel.model.dataformat.JacksonXMLDataFormat;
@@ -46,7 +47,7 @@ public class Routes extends RouteBuilder {
                 .filter(xpath("/order[not(@test)]"))
                 .log(INFO, "Received file: ${header.CamelFileName}")
                 .to("jms:placedOrders");*/
-
+/*
         var jsonXmlDataFormat = new JacksonXMLDataFormat();
         jsonXmlDataFormat.setPrettyPrint("true");
 
@@ -163,10 +164,20 @@ public class Routes extends RouteBuilder {
                     .to("log:pl.training.camel")
                 .end()
                 .to("log:pl.training.camel");*/
-
+/*
         from("file:data/input?noop=true&delay={{file.interval}}")
+                //.transacted()
                 .to("as400:main");
 
+        rest("/orders")
+                .consumes("application/xml")
+                .post()
+                .to("direct:orders");
+
+
+        ProducerTemplate template = exchange.getContext().createProducerTemplate();
+        template.sendBody("activemq:MyQueue", "<hello>world!</hello>");
+*/
 
     }
 
